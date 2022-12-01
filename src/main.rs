@@ -27,15 +27,11 @@ impl std::fmt::Display for Day {
 }
 
 fn main() {
-    let days = vec![
-        Day {
-            no: 1,
-            part1: lazy!(day1::increasing_numbers_from_file("input/day1.txt").to_string()),
-            part2: lazy!(
-                day1::increasing_numbers_with_windows_from_file("input/day1.txt").to_string()
-            ),
-        },
-    ];
+    let days = vec![Day {
+        no: 1,
+        part1: lazy!(day1::most_calories_from_file("input/day1.txt").to_string()),
+        part2: lazy!(day1::three_most_calories_from_file("input/day1.txt").to_string()),
+    }];
 
     let args: Vec<String> = env::args().collect();
     if args.len() > 1 {
