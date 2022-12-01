@@ -30,7 +30,7 @@ pub fn three_most_calories_from_file(filename: &str) -> i32 {
     parse_file(filename)
         .iter()
         .map(|v| v.iter().sum::<i32>())
-        .sorted_by(|a, b| Ord::cmp(b, a))
+        .sorted_by(|a, b| Ord::cmp(b, a)) // sort descending
         .collect::<Vec<i32>>()
         .get(0..3)
         .unwrap()
