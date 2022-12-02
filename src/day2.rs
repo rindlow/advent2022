@@ -1,76 +1,46 @@
-#![allow(clippy::identity_op)]
+#![allow(clippy::cast_possible_truncation)]
+#![allow(clippy::cast_possible_wrap)]
 
-use itertools::Itertools;
 use std::fs::read_to_string;
 
-#[derive(Debug)]
-struct Guide {
-    first: u8,
-    second: u8,
-}
-
-fn parse_file(filename: &str) -> Vec<Guide> {
+pub fn score_strategy(filename: &str, score: &[&str]) -> i32 {
     read_to_string(filename)
         .unwrap()
         .lines()
-        .map(|s| {
-            let b = s.as_bytes();
-            Guide {
-                first: b[0],
-                second: b[2],
-            }
-        })
-        .collect_vec()
-}
-
-pub fn score_strategy(filename: &str) -> i32 {
-    parse_file(filename)
-        .iter()
-        .map(|guide| match guide {
-            g if g.first == b'A' && g.second == b'Z' => 3 + 0,
-            g if g.first == b'B' && g.second == b'X' => 1 + 0,
-            g if g.first == b'C' && g.second == b'Y' => 2 + 0,
-            g if g.first == b'A' && g.second == b'X' => 1 + 3,
-            g if g.first == b'B' && g.second == b'Y' => 2 + 3,
-            g if g.first == b'C' && g.second == b'Z' => 3 + 3,
-            g if g.first == b'A' && g.second == b'Y' => 2 + 6,
-            g if g.first == b'B' && g.second == b'Z' => 3 + 6,
-            g if g.first == b'C' && g.second == b'X' => 1 + 6,
-            _ => panic!("Illegal strategy"),
-        })
+        .map(|s| score.iter().position(|g| *g == s).unwrap() as i32 + 1)
         .sum()
 }
 
-pub fn score_strategy_2(filename: &str) -> i32 {
-    parse_file(filename)
-        .iter()
-        .map(|guide| match guide {
-            g if g.first == b'A' && g.second == b'X' => 3 + 0,
-            g if g.first == b'B' && g.second == b'X' => 1 + 0,
-            g if g.first == b'C' && g.second == b'X' => 2 + 0,
-            g if g.first == b'A' && g.second == b'Y' => 1 + 3,
-            g if g.first == b'B' && g.second == b'Y' => 2 + 3,
-            g if g.first == b'C' && g.second == b'Y' => 3 + 3,
-            g if g.first == b'A' && g.second == b'Z' => 2 + 6,
-            g if g.first == b'B' && g.second == b'Z' => 3 + 6,
-            g if g.first == b'C' && g.second == b'Z' => 1 + 6,
-            _ => panic!("Illegal strategy"),
-        })
-        .sum()
+pub fn score_selected(filename: &str) -> i32 {
+    score_strategy(
+        filename,
+        &[
+            "B X", "C Y", "A Z", "A X", "B Y", "C Z", "C X", "A Y", "B Z",
+        ],
+    )
+}
+
+pub fn score_end(filename: &str) -> i32 {
+    score_strategy(
+        filename,
+        &[
+            "B X", "C X", "A X", "A Y", "B Y", "C Y", "C Z", "A Z", "B Z",
+        ],
+    )
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::day2::{score_strategy, score_strategy_2};
+    use crate::day2::{score_end, score_selected};
 
     #[test]
     fn part1() {
-        assert_eq!(15, score_strategy("testinput/day2.txt"));
-        assert_eq!(12586, score_strategy("input/day2.txt"));
+        assert_eq!(15, score_selected("testinput/day2.txt"));
+        assert_eq!(12586, score_selected("input/day2.txt"));
     }
     #[test]
     fn part2() {
-        assert_eq!(12, score_strategy_2("testinput/day2.txt"));
-        assert_eq!(13193, score_strategy_2("input/day2.txt"));
+        assert_eq!(12, score_end("testinput/day2.txt"));
+        assert_eq!(13193, score_end("input/day2.txt"));
     }
 }

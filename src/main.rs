@@ -38,8 +38,8 @@ fn main() {
         },
         Day {
             no: 2,
-            part1: lazy!(day2::score_strategy("input/day2.txt").to_string()),
-            part2: lazy!(day2::score_strategy_2("input/day2.txt").to_string()),
+            part1: lazy!(day2::score_selected("input/day2.txt").to_string()),
+            part2: lazy!(day2::score_end("input/day2.txt").to_string()),
         },
     ];
 
