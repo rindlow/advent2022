@@ -1,6 +1,3 @@
-#![allow(clippy::must_use_candidate)]
-#![allow(clippy::missing_panics_doc)]
-
 use itertools::Itertools;
 
 fn parse_file(filename: &str) -> Vec<Vec<i32>> {
@@ -13,9 +10,9 @@ fn parse_file(filename: &str) -> Vec<Vec<i32>> {
             slice
                 .iter()
                 .map(|string| string.parse::<i32>().unwrap())
-                .collect::<Vec<i32>>()
+                .collect_vec()
         })
-        .collect::<Vec<Vec<i32>>>()
+        .collect_vec()
 }
 
 pub fn most_calories_from_file(filename: &str) -> i32 {
@@ -31,7 +28,7 @@ pub fn three_most_calories_from_file(filename: &str) -> i32 {
         .iter()
         .map(|v| v.iter().sum::<i32>())
         .sorted_by(|a, b| Ord::cmp(b, a)) // sort descending
-        .collect::<Vec<i32>>()
+        .collect_vec()
         .get(0..3)
         .unwrap()
         .iter()
