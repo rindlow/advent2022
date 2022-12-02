@@ -1,17 +1,14 @@
-#![allow(clippy::cast_possible_truncation)]
-#![allow(clippy::cast_possible_wrap)]
-
 use std::fs::read_to_string;
 
-pub fn score_strategy(filename: &str, score: &[&str]) -> i32 {
+pub fn score_strategy(filename: &str, score: &[&str]) -> u64 {
     read_to_string(filename)
         .unwrap()
         .lines()
-        .map(|s| score.iter().position(|g| *g == s).unwrap() as i32 + 1)
+        .map(|s| score.iter().position(|g| *g == s).unwrap() as u64 + 1)
         .sum()
 }
 
-pub fn score_selected(filename: &str) -> i32 {
+pub fn score_selected(filename: &str) -> u64 {
     score_strategy(
         filename,
         &[
@@ -20,7 +17,7 @@ pub fn score_selected(filename: &str) -> i32 {
     )
 }
 
-pub fn score_end(filename: &str) -> i32 {
+pub fn score_end(filename: &str) -> u64 {
     score_strategy(
         filename,
         &[
