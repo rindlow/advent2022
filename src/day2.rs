@@ -13,7 +13,6 @@ fn parse_file(filename: &str) -> Vec<Guide> {
     read_to_string(filename)
         .unwrap()
         .lines()
-        .filter(|s| !s.is_empty())
         .map(|s| {
             let b = s.as_bytes();
             Guide {
