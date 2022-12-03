@@ -1,6 +1,6 @@
 use std::fs::read_to_string;
 
-pub fn score_strategy(filename: &str, score: &[&str]) -> u64 {
+fn score_strategy(filename: &str, score: &[&str]) -> u64 {
     read_to_string(filename)
         .unwrap()
         .lines()
