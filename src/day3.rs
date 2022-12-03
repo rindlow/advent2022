@@ -4,22 +4,18 @@ use itertools::Itertools;
 use std::{collections::HashSet, fs::read_to_string};
 
 fn common_chars(s1: &str, s2: &str) -> String {
-    let set1: HashSet<char> = s1.chars().collect();
-    let set2: HashSet<char> = s2.chars().collect();
-    set1.intersection(&set2).collect()
+    s1.chars()
+        .collect::<HashSet<char>>()
+        .intersection(&s2.chars().collect::<HashSet<char>>())
+        .collect()
 }
 
 fn priority(s: String) -> u32 {
     assert!(s.len() == 1, "Not exactly one common char");
-    if let Some(c) = s.chars().next() {
-        let a = c as u32;
-        if a > 96 {
-            a - 96
-        } else {
-            a - 38
-        }
-    } else {
-        0
+    match s.chars().next() {
+        Some(c) if c > 'a' => c as u32 - 96,
+        Some(c) => c as u32 - 38,
+        None => 0,
     }
 }
 
