@@ -9,6 +9,7 @@ use std::time::Instant;
 
 pub mod day1;
 pub mod day2;
+pub mod day3;
 
 struct Day {
     no: i8,
@@ -40,6 +41,11 @@ fn main() {
             no: 2,
             part1: lazy!(day2::score_selected("input/day2.txt").to_string()),
             part2: lazy!(day2::score_end("input/day2.txt").to_string()),
+        },
+        Day {
+            no: 3,
+            part1: lazy!(day3::rucksack("input/day3.txt").to_string()),
+            part2: lazy!(day3::badges("input/day3.txt").to_string()),
         },
     ];
 
