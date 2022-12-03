@@ -1,5 +1,3 @@
-#![allow(clippy::needless_pass_by_value)]
-
 use itertools::Itertools;
 use std::{collections::HashSet, fs::read_to_string};
 
@@ -10,7 +8,7 @@ fn common_chars(s1: &str, s2: &str) -> String {
         .collect()
 }
 
-fn priority(s: String) -> u32 {
+fn priority(s: &str) -> u32 {
     assert!(s.len() == 1, "Not exactly one common char");
     match s.chars().next() {
         Some(c) if c >= 'a' => c as u32 - 96,
@@ -25,7 +23,7 @@ pub fn rucksack(filename: &str) -> u32 {
         .lines()
         .map(|line| {
             let l = line.len() / 2;
-            priority(common_chars(&line[(..l)], &line[(l..)]))
+            priority(&common_chars(&line[(..l)], &line[(l..)]))
         })
         .sum()
 }
@@ -37,7 +35,7 @@ pub fn badges(filename: &str) -> u32 {
         .collect_vec()
         .chunks(3)
         .map(|chunk| {
-            priority(common_chars(
+            priority(&common_chars(
                 &common_chars(chunk.first().unwrap(), chunk.get(1).unwrap()),
                 chunk.last().unwrap(),
             ))
