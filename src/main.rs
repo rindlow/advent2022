@@ -58,8 +58,10 @@ fn main() {
             println!("Day not implemented: {}", idx);
         }
     } else {
+        let now = Instant::now();
         for day in &days {
             print!("{}", day);
         }
+        println!("all finished in {:.2?}", now.elapsed());
     }
 }
