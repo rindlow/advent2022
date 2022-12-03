@@ -13,7 +13,7 @@ fn common_chars(s1: &str, s2: &str) -> String {
 fn priority(s: String) -> u32 {
     assert!(s.len() == 1, "Not exactly one common char");
     match s.chars().next() {
-        Some(c) if c > 'a' => c as u32 - 96,
+        Some(c) if c >= 'a' => c as u32 - 96,
         Some(c) => c as u32 - 38,
         None => 0,
     }
