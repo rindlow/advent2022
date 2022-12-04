@@ -10,6 +10,7 @@ use std::time::Instant;
 pub mod day1;
 pub mod day2;
 pub mod day3;
+pub mod day4;
 
 struct Day {
     no: i8,
@@ -46,6 +47,11 @@ fn main() {
             no: 3,
             part1: lazy!(day3::rucksack("input/day3.txt").to_string()),
             part2: lazy!(day3::badges("input/day3.txt").to_string()),
+        },
+        Day {
+            no: 4,
+            part1: lazy!(day4::fully_contain("input/day4.txt").to_string()),
+            part2: lazy!(day4::overlap("input/day4.txt").to_string()),
         },
     ];
 
