@@ -11,6 +11,7 @@ pub mod day1;
 pub mod day2;
 pub mod day3;
 pub mod day4;
+pub mod day5;
 
 struct Day {
     no: i8,
@@ -52,6 +53,11 @@ fn main() {
             no: 4,
             part1: lazy!(day4::fully_contain("input/day4.txt").to_string()),
             part2: lazy!(day4::overlap("input/day4.txt").to_string()),
+        },
+        Day {
+            no: 5,
+            part1: lazy!(day5::crates_single("input/day5.txt")),
+            part2: lazy!(day5::crates_multiple("input/day5.txt")),
         },
     ];
 
