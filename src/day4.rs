@@ -1,8 +1,13 @@
-use std::{collections::HashSet, fs::read_to_string};
+use std::fs::read_to_string;
+
+struct Range {
+    first: i32,
+    last: i32,
+}
 
 fn helper<F>(filename: &str, f: F) -> u64
 where
-    F: Fn(HashSet<i32>, HashSet<i32>) -> bool,
+    F: Fn(Range, Range) -> bool,
 {
     read_to_string(filename)
         .unwrap()
@@ -10,7 +15,10 @@ where
         .map(|line| {
             let mut pair = line.split(',').map(|range| {
                 let mut sections = range.split('-').map(|i| i.parse::<i32>().unwrap());
-                (sections.next().unwrap()..=sections.next().unwrap()).collect::<HashSet<i32>>()
+                Range {
+                    first: sections.next().unwrap(),
+                    last: sections.next().unwrap(),
+                }
             });
             f(pair.next().unwrap(), pair.next().unwrap())
         })
@@ -19,11 +27,18 @@ where
 }
 
 pub fn fully_contain(filename: &str) -> u64 {
-    helper(filename, |a, b| a.is_subset(&b) || a.is_superset(&b))
+    helper(filename, |a, b| {
+        (a.first <= b.first && a.last >= b.last) || (a.first >= b.first && a.last <= b.last)
+    })
 }
 
 pub fn overlap(filename: &str) -> u64 {
-    helper(filename, |a, b| !a.is_disjoint(&b))
+    helper(filename, |a, b| {
+        (a.first >= b.first && a.first <= b.last)
+            || (a.last >= b.first && a.last <= b.last)
+            || (a.first <= b.first && a.last >= b.last)
+            || (a.first >= b.first && a.last <= b.last)
+    })
 }
 
 #[cfg(test)]
