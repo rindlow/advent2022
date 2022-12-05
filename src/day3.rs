@@ -1,10 +1,11 @@
 use itertools::Itertools;
-use std::{collections::HashSet, fs::read_to_string};
+use std::fs::read_to_string;
 
 fn common_chars(s1: &str, s2: &str) -> String {
     s1.chars()
-        .collect::<HashSet<char>>()
-        .intersection(&s2.chars().collect::<HashSet<char>>())
+        .filter(|c| s2.contains(*c))
+        .sorted()
+        .dedup()
         .collect()
 }
 
