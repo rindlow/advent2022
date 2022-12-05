@@ -1,23 +1,5 @@
-use std::fs::read_to_string;
-
 use itertools::Itertools;
-
-fn move_single(mut stacks: Vec<Vec<char>>, n: i8, src: usize, dst: usize) -> Vec<Vec<char>> {
-    for _ in 0..n {
-        let c = stacks[src - 1].pop().unwrap();
-        stacks[dst - 1].push(c);
-    }
-    stacks
-}
-
-fn move_multiple(mut stacks: Vec<Vec<char>>, n: i8, src: usize, dst: usize) -> Vec<Vec<char>> {
-    let mut tmp = Vec::<char>::new();
-    for _ in 0..n {
-        tmp.insert(0, stacks[src - 1].pop().unwrap());
-    }
-    stacks[dst - 1].extend(tmp);
-    stacks
-}
+use std::fs::read_to_string;
 
 fn crates<F>(filename: &str, mover: F) -> String
 where
@@ -51,11 +33,24 @@ where
 }
 
 pub fn crates_single(filename: &str) -> String {
-    crates(filename, move_single)
+    crates(filename, |mut stacks, n, src, dst| -> Vec<Vec<char>> {
+        for _ in 0..n {
+            let c = stacks[src - 1].pop().unwrap();
+            stacks[dst - 1].push(c);
+        }
+        stacks
+    })
 }
 
 pub fn crates_multiple(filename: &str) -> String {
-    crates(filename, move_multiple)
+    crates(filename, |mut stacks, n, src, dst| -> Vec<Vec<char>> {
+        let mut tmp = Vec::<char>::new();
+        for _ in 0..n {
+            tmp.insert(0, stacks[src - 1].pop().unwrap());
+        }
+        stacks[dst - 1].extend(tmp);
+        stacks
+    })
 }
 
 #[cfg(test)]
