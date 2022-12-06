@@ -1,6 +1,5 @@
-use std::fs::read_to_string;
-
 use itertools::Itertools;
+use std::fs::read_to_string;
 
 fn start_of_sequence(filename: &str, size: usize) -> usize {
     read_to_string(filename)
