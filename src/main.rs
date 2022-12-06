@@ -12,6 +12,7 @@ pub mod day2;
 pub mod day3;
 pub mod day4;
 pub mod day5;
+pub mod day6;
 
 struct Day {
     no: i8,
@@ -58,6 +59,11 @@ fn main() {
             no: 5,
             part1: lazy!(day5::crates_single("input/day5.txt")),
             part2: lazy!(day5::crates_multiple("input/day5.txt")),
+        },
+        Day {
+            no: 6,
+            part1: lazy!(day6::start_of_package("input/day6.txt").to_string()),
+            part2: lazy!(day6::start_of_message("input/day6.txt").to_string()),
         },
     ];
 
