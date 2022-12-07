@@ -13,6 +13,7 @@ pub mod day3;
 pub mod day4;
 pub mod day5;
 pub mod day6;
+pub mod day7;
 
 struct Day {
     no: i8,
@@ -64,6 +65,11 @@ fn main() {
             no: 6,
             part1: lazy!(day6::start_of_package("input/day6.txt").to_string()),
             part2: lazy!(day6::start_of_message("input/day6.txt").to_string()),
+        },
+        Day {
+            no: 7,
+            part1: lazy!(day7::sum_dirs_below("input/day7.txt", 100_000).to_string()),
+            part2: lazy!(day7::dir_to_delete("input/day7.txt", 70_000_000, 30_000_000).to_string()),
         },
     ];
 
