@@ -68,8 +68,8 @@ fn main() {
         },
         Day {
             no: 7,
-            part1: lazy!(day7::sum_dirs_below("input/day7.txt", 100_000).to_string()),
-            part2: lazy!(day7::dir_to_delete("input/day7.txt", 70_000_000, 30_000_000).to_string()),
+            part1: lazy!(day7::sum_dirs_below("input/day7.txt").to_string()),
+            part2: lazy!(day7::dir_to_delete("input/day7.txt").to_string()),
         },
     ];
 
