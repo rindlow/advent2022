@@ -14,6 +14,7 @@ pub mod day4;
 pub mod day5;
 pub mod day6;
 pub mod day7;
+pub mod day8;
 
 struct Day {
     no: i8,
@@ -70,6 +71,11 @@ fn main() {
             no: 7,
             part1: lazy!(day7::sum_dirs_below("input/day7.txt").to_string()),
             part2: lazy!(day7::dir_to_delete("input/day7.txt").to_string()),
+        },
+        Day {
+            no: 8,
+            part1: lazy!(day8::visible("input/day8.txt").to_string()),
+            part2: lazy!(day8::highest_score("input/day8.txt").to_string()),
         },
     ];
 
