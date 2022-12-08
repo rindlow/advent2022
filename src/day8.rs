@@ -11,32 +11,32 @@ fn parse_file(filename: &str) -> Grid {
         .collect_vec()
 }
 
-fn is_hidden(x: usize, y: usize, grid: &Grid) -> bool {
+fn is_visible(x: usize, y: usize, grid: &Grid) -> bool {
     let size = grid.len();
     if x == 0 || x == size - 1 || y == 0 || y == size - 1 {
-        return false;
+        return true;
     }
     let height = grid[y][x];
 
-    // Ugly &&-chain to enable short circuit when first visible is found
-    grid[y].get(0..x).unwrap().iter().any(|h| *h >= height)
-        && grid[y]
+    // Ugly ||-chain to enable short circuit when first visible is found
+    grid[y].get(0..x).unwrap().iter().all(|h| *h < height)
+        || grid[y]
             .get(x + 1..size)
             .unwrap()
             .iter()
-            .any(|h| *h >= height)
-        && grid
+            .all(|h| *h < height)
+        || grid
             .get(0..y)
             .unwrap()
             .iter()
             .map(|row| row[x])
-            .any(|h| h >= height)
-        && grid
+            .all(|h| h < height)
+        || grid
             .get(y + 1..size)
             .unwrap()
             .iter()
             .map(|row| row[x])
-            .any(|h| h >= height)
+            .all(|h| h < height)
 }
 
 fn score(x: usize, y: usize, grid: &Grid) -> u64 {
@@ -101,7 +101,7 @@ pub fn visible(filename: &str) -> u64 {
     let grid = parse_file(filename);
     let size = grid.len();
     (0..size)
-        .map(|x| (0..size).filter(|y| !is_hidden(x, *y, &grid)).count() as u64)
+        .map(|x| (0..size).filter(|y| is_visible(x, *y, &grid)).count() as u64)
         .sum()
 }
 
