@@ -100,10 +100,9 @@ fn score(x: usize, y: usize, grid: &Grid) -> u64 {
 pub fn visible(filename: &str) -> u64 {
     let grid = parse_file(filename);
     let size = grid.len();
-    let hidden: u64 = (0..size)
-        .map(|x| (0..size).filter(|y| is_hidden(x, *y, &grid)).count() as u64)
-        .sum();
-    (size * size) as u64 - hidden
+    (0..size)
+        .map(|x| (0..size).filter(|y| !is_hidden(x, *y, &grid)).count() as u64)
+        .sum()
 }
 
 pub fn highest_score(filename: &str) -> u64 {
