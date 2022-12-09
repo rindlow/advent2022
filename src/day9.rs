@@ -19,12 +19,6 @@ struct Pos {
     y: i32,
 }
 
-#[derive(Clone)]
-struct State {
-    knots: Vec<Pos>,
-    visited: Vec<Pos>,
-}
-
 fn parse_file(filename: &str) -> Vec<Motion> {
     read_to_string(filename)
         .unwrap()
@@ -77,51 +71,37 @@ fn new_pos(knots: &[Pos], idx: usize) -> Pos {
     }
 }
 
-fn step(state: &State, dir: Direction) -> State {
-    let mut knots = state.knots.clone();
-    knots[0] = match dir {
-        Direction::D => Pos {
-            x: knots[0].x,
-            y: knots[0].y - 1,
-        },
-        Direction::L => Pos {
-            x: knots[0].x - 1,
-            y: knots[0].y,
-        },
-        Direction::R => Pos {
-            x: knots[0].x + 1,
-            y: knots[0].y,
-        },
-        Direction::U => Pos {
-            x: knots[0].x,
-            y: knots[0].y + 1,
-        },
-    };
-    for i in 1..knots.len() {
-        knots[i] = new_pos(&knots, i);
-    }
-    let mut visited = state.visited.clone();
-    visited.push(knots[knots.len() - 1]);
-
-    State { knots, visited }
-}
-
+// Imperative version is ~50 times faster than functional :-(
 pub fn visited_nodes(filename: &str, n: usize) -> u64 {
-    let mut steps = 0;
-    let state = parse_file(filename).iter().fold(
-        State {
-            knots: vec![Pos { x: 0, y: 0 }; n],
-            visited: Vec::<Pos>::new(),
-        },
-        |acc, elem| {
-            (0..elem.steps).fold(acc, |s, _| {
-                steps += 1;
-                step(&s, elem.dir)
-            })
-        },
-    );
-    println!("Total #steps = {}", steps);
-    state.visited.iter().sorted().dedup().count() as u64
+    let mut knots = vec![Pos { x: 0, y: 0 }; n];
+    let mut visited = Vec::<Pos>::new();
+    for elem in parse_file(filename) {
+        for _ in 0..elem.steps {
+            knots[0] = match elem.dir {
+                Direction::D => Pos {
+                    x: knots[0].x,
+                    y: knots[0].y - 1,
+                },
+                Direction::L => Pos {
+                    x: knots[0].x - 1,
+                    y: knots[0].y,
+                },
+                Direction::R => Pos {
+                    x: knots[0].x + 1,
+                    y: knots[0].y,
+                },
+                Direction::U => Pos {
+                    x: knots[0].x,
+                    y: knots[0].y + 1,
+                },
+            };
+            for i in 1..knots.len() {
+                knots[i] = new_pos(&knots, i);
+            }
+            visited.push(knots[knots.len() - 1]);
+        }
+    }
+    visited.iter().sorted().dedup().count() as u64
 }
 
 #[cfg(test)]
