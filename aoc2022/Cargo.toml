@@ -10,5 +10,5 @@ brunch = "0.3.6"
 itertools = "0.10.5"
 
 [[bench]]
-name = "bench9"
+name = "bench"
 harness = false
