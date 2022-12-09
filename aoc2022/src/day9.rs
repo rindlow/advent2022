@@ -1,5 +1,4 @@
-use itertools::Itertools;
-use std::fs::read_to_string;
+use std::{collections::HashSet, fs::read_to_string};
 
 #[derive(Clone, Copy, Debug)]
 enum Direction {
@@ -13,7 +12,7 @@ struct Motion {
     steps: u32,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 struct Pos {
     x: i32,
     y: i32,
@@ -74,7 +73,7 @@ fn new_pos(knots: &[Pos], idx: usize) -> Pos {
 // Imperative version is ~50 times faster than functional :-(
 pub fn visited_nodes(filename: &str, n: usize) -> u64 {
     let mut knots = vec![Pos { x: 0, y: 0 }; n];
-    let mut visited = Vec::<Pos>::new();
+    let mut visited = HashSet::<Pos>::new();
     for elem in parse_file(filename) {
         for _ in 0..elem.steps {
             knots[0] = match elem.dir {
@@ -98,10 +97,10 @@ pub fn visited_nodes(filename: &str, n: usize) -> u64 {
             for i in 1..knots.len() {
                 knots[i] = new_pos(&knots, i);
             }
-            visited.push(knots[knots.len() - 1]);
+            visited.insert(knots[knots.len() - 1]);
         }
     }
-    visited.iter().sorted().dedup().count() as u64
+    visited.len() as u64
 }
 
 #[cfg(test)]
