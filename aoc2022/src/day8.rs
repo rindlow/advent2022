@@ -120,12 +120,12 @@ mod tests {
 
     #[test]
     fn part1() {
-        assert_eq!(21, visible("testinput/day8.txt"));
-        assert_eq!(1798, visible("input/day8.txt"));
+        assert_eq!(21, visible("../testinput/day8.txt"));
+        assert_eq!(1798, visible("../input/day8.txt"));
     }
     #[test]
     fn part2() {
-        assert_eq!(8, highest_score("testinput/day8.txt"));
-        assert_eq!(259_308, highest_score("input/day8.txt"));
+        assert_eq!(8, highest_score("../testinput/day8.txt"));
+        assert_eq!(259_308, highest_score("../input/day8.txt"));
     }
 }

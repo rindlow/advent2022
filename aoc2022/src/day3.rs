@@ -50,12 +50,12 @@ mod tests {
 
     #[test]
     fn part1() {
-        assert_eq!(157, rucksack("testinput/day3.txt"));
-        assert_eq!(7826, rucksack("input/day3.txt"));
+        assert_eq!(157, rucksack("../testinput/day3.txt"));
+        assert_eq!(7826, rucksack("../input/day3.txt"));
     }
     #[test]
     fn part2() {
-        assert_eq!(70, badges("testinput/day3.txt"));
-        assert_eq!(2577, badges("input/day3.txt"));
+        assert_eq!(70, badges("../testinput/day3.txt"));
+        assert_eq!(2577, badges("../input/day3.txt"));
     }
 }

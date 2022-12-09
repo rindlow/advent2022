@@ -47,12 +47,12 @@ mod tests {
 
     #[test]
     pub fn part1() {
-        assert_eq!(2, fully_contain("testinput/day4.txt"));
-        assert_eq!(538, fully_contain("input/day4.txt"));
+        assert_eq!(2, fully_contain("../testinput/day4.txt"));
+        assert_eq!(538, fully_contain("../input/day4.txt"));
     }
     #[test]
     pub fn part2() {
-        assert_eq!(4, overlap("testinput/day4.txt"));
-        assert_eq!(792, overlap("input/day4.txt"));
+        assert_eq!(4, overlap("../testinput/day4.txt"));
+        assert_eq!(792, overlap("../input/day4.txt"));
     }
 }

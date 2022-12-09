@@ -41,12 +41,15 @@ mod tests {
 
     #[test]
     fn part1() {
-        assert_eq!(24_000, most_calories_from_file("testinput/day1.txt"));
-        assert_eq!(69_912, most_calories_from_file("input/day1.txt"));
+        assert_eq!(24_000, most_calories_from_file("../testinput/day1.txt"));
+        assert_eq!(69_912, most_calories_from_file("../input/day1.txt"));
     }
     #[test]
     fn part2() {
-        assert_eq!(45_000, three_most_calories_from_file("testinput/day1.txt"));
-        assert_eq!(208_180, three_most_calories_from_file("input/day1.txt"));
+        assert_eq!(
+            45_000,
+            three_most_calories_from_file("../testinput/day1.txt")
+        );
+        assert_eq!(208_180, three_most_calories_from_file("../input/day1.txt"));
     }
 }

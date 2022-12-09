@@ -27,12 +27,12 @@ mod tests {
 
     #[test]
     fn part1() {
-        assert_eq!(7, start_of_package("testinput/day6.txt"));
-        assert_eq!(1804, start_of_package("input/day6.txt"));
+        assert_eq!(7, start_of_package("../testinput/day6.txt"));
+        assert_eq!(1804, start_of_package("../input/day6.txt"));
     }
     #[test]
     fn part2() {
-        assert_eq!(19, start_of_message("testinput/day6.txt"));
-        assert_eq!(2508, start_of_message("input/day6.txt"));
+        assert_eq!(19, start_of_message("../testinput/day6.txt"));
+        assert_eq!(2508, start_of_message("../input/day6.txt"));
     }
 }

@@ -46,12 +46,12 @@ mod tests {
     use crate::day7::{dir_to_delete, sum_dirs_below};
     #[test]
     fn part1() {
-        assert_eq!(95_437, sum_dirs_below("testinput/day7.txt",));
-        assert_eq!(1_792_222, sum_dirs_below("input/day7.txt"));
+        assert_eq!(95_437, sum_dirs_below("../testinput/day7.txt",));
+        assert_eq!(1_792_222, sum_dirs_below("../input/day7.txt"));
     }
     #[test]
     fn part2() {
-        assert_eq!(24_933_642, dir_to_delete("testinput/day7.txt"));
-        assert_eq!(1_112_963, dir_to_delete("input/day7.txt"));
+        assert_eq!(24_933_642, dir_to_delete("../testinput/day7.txt"));
+        assert_eq!(1_112_963, dir_to_delete("../input/day7.txt"));
     }
 }

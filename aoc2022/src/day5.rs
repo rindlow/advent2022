@@ -59,12 +59,12 @@ mod tests {
 
     #[test]
     fn part1() {
-        assert_eq!("CMZ", crates_single("testinput/day5.txt"));
-        assert_eq!("VRWBSFZWM", crates_single("input/day5.txt"));
+        assert_eq!("CMZ", crates_single("../testinput/day5.txt"));
+        assert_eq!("VRWBSFZWM", crates_single("../input/day5.txt"));
     }
     #[test]
     fn part2() {
-        assert_eq!("MCD", crates_multiple("testinput/day5.txt"));
-        assert_eq!("RBTWJWMCF", crates_multiple("input/day5.txt"));
+        assert_eq!("MCD", crates_multiple("../testinput/day5.txt"));
+        assert_eq!("RBTWJWMCF", crates_multiple("../input/day5.txt"));
     }
 }

@@ -32,12 +32,12 @@ mod tests {
 
     #[test]
     fn part1() {
-        assert_eq!(15, score_selected("testinput/day2.txt"));
-        assert_eq!(12586, score_selected("input/day2.txt"));
+        assert_eq!(15, score_selected("../testinput/day2.txt"));
+        assert_eq!(12586, score_selected("../input/day2.txt"));
     }
     #[test]
     fn part2() {
-        assert_eq!(12, score_end("testinput/day2.txt"));
-        assert_eq!(13193, score_end("input/day2.txt"));
+        assert_eq!(12, score_end("../testinput/day2.txt"));
+        assert_eq!(13193, score_end("../input/day2.txt"));
     }
 }

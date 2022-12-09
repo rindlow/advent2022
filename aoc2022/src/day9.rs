@@ -110,13 +110,13 @@ mod tests {
 
     #[test]
     fn part1() {
-        assert_eq!(13, visited_nodes("testinput/day9.txt", 2));
-        assert_eq!(6498, visited_nodes("input/day9.txt", 2));
+        assert_eq!(13, visited_nodes("../testinput/day9.txt", 2));
+        assert_eq!(6498, visited_nodes("../input/day9.txt", 2));
     }
     #[test]
     fn part2() {
-        assert_eq!(1, visited_nodes("testinput/day9.txt", 10));
-        assert_eq!(36, visited_nodes("testinput/day9b.txt", 10));
-        assert_eq!(2531, visited_nodes("input/day9.txt", 10));
+        assert_eq!(1, visited_nodes("../testinput/day9.txt", 10));
+        assert_eq!(36, visited_nodes("../testinput/day9b.txt", 10));
+        assert_eq!(2531, visited_nodes("../input/day9.txt", 10));
     }
 }
