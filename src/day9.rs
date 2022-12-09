@@ -1,12 +1,7 @@
 use itertools::Itertools;
-use std::{
-    char::from_digit,
-    cmp::{max, min},
-    fmt,
-    fs::read_to_string,
-};
+use std::fs::read_to_string;
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Clone, Copy, Debug)]
 enum Direction {
     L,
     U,
@@ -28,73 +23,6 @@ struct Pos {
 struct State {
     knots: Vec<Pos>,
     visited: Vec<Pos>,
-}
-impl fmt::Display for State {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let min_x = min(
-            0,
-            self.knots
-                .iter()
-                .chain(self.visited.iter())
-                .map(|p| p.x)
-                .min()
-                .unwrap(),
-        );
-        let min_y = min(
-            0,
-            self.knots
-                .iter()
-                .chain(self.visited.iter())
-                .map(|p| p.y)
-                .min()
-                .unwrap(),
-        );
-        let max_x = max(
-            6,
-            self.knots
-                .iter()
-                .chain(self.visited.iter())
-                .map(|p| p.x)
-                .max()
-                .unwrap(),
-        );
-        let max_y = max(
-            5,
-            self.knots
-                .iter()
-                .chain(self.visited.iter())
-                .map(|p| p.y)
-                .max()
-                .unwrap(),
-        );
-        for y in (min_y..=max_y).rev() {
-            for x in min_x..=max_x {
-                write!(f, "{}", display_pos(self, x, y)).unwrap();
-            }
-            writeln!(f).unwrap();
-        }
-        writeln!(f)
-    }
-}
-
-fn display_pos(state: &State, x: i32, y: i32) -> char {
-    match state
-        .knots
-        .iter()
-        .enumerate()
-        .find(|(_, p)| p.x == x && p.y == y)
-    {
-        Some((i, _)) => from_digit(u32::try_from(i).unwrap(), 10).unwrap(),
-        None => {
-            if state.visited.iter().any(|p| p.x == x && p.y == y) {
-                '#'
-            } else if x == 0 && y == 0 {
-                's'
-            } else {
-                '.'
-            }
-        }
-    }
 }
 
 fn parse_file(filename: &str) -> Vec<Motion> {
@@ -120,7 +48,7 @@ fn parse_file(filename: &str) -> Vec<Motion> {
         .collect()
 }
 
-fn knot_pos(knots: &[Pos], idx: usize) -> Pos {
+fn new_pos(knots: &[Pos], idx: usize) -> Pos {
     let knot = knots[idx];
     let dx = knots[idx - 1].x - knot.x;
     let dy = knots[idx - 1].y - knot.y;
@@ -170,7 +98,7 @@ fn step(state: &State, dir: Direction) -> State {
         },
     };
     for i in 1..knots.len() {
-        knots[i] = knot_pos(&knots, i);
+        knots[i] = new_pos(&knots, i);
     }
     let mut visited = state.visited.clone();
     visited.push(knots[knots.len() - 1]);
@@ -178,18 +106,21 @@ fn step(state: &State, dir: Direction) -> State {
     State { knots, visited }
 }
 
-fn motion(acc: State, elem: &Motion) -> State {
-    (0..elem.steps).fold(acc, |s, _| step(&s, elem.dir))
-}
-
 pub fn visited_nodes(filename: &str, n: usize) -> u64 {
+    let mut steps = 0;
     let state = parse_file(filename).iter().fold(
         State {
             knots: vec![Pos { x: 0, y: 0 }; n],
             visited: Vec::<Pos>::new(),
         },
-        motion,
+        |acc, elem| {
+            (0..elem.steps).fold(acc, |s, _| {
+                steps += 1;
+                step(&s, elem.dir)
+            })
+        },
     );
+    println!("Total #steps = {}", steps);
     state.visited.iter().sorted().dedup().count() as u64
 }
 

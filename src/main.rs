@@ -78,6 +78,11 @@ fn main() {
             part1: lazy!(day8::visible("input/day8.txt").to_string()),
             part2: lazy!(day8::highest_score("input/day8.txt").to_string()),
         },
+        Day {
+            no: 9,
+            part1: lazy!(day9::visited_nodes("input/day9.txt", 2).to_string()),
+            part2: lazy!(day9::visited_nodes("input/day9.txt", 10).to_string()),
+        },
     ];
 
     let args: Vec<String> = env::args().collect();
