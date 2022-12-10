@@ -1,69 +1,35 @@
-#![allow(clippy::cast_possible_truncation)]
-#![allow(clippy::cast_possible_wrap)]
+use std::{convert::TryFrom, fs::read_to_string};
 
-use std::fs::read_to_string;
-
-enum Operator {
-    Addx,
-    Noop,
-}
-struct Instruction {
-    operator: Operator,
-    operand: i32,
-}
-
-fn parse_file(filename: &str) -> Vec<Instruction> {
-    read_to_string(filename)
-        .unwrap()
-        .lines()
-        .map(|line| {
-            if line.starts_with("addx") {
-                Instruction {
-                    operator: Operator::Addx,
-                    operand: line.get(5..).unwrap().parse::<i32>().unwrap(),
-                }
-            } else {
-                Instruction {
-                    operator: Operator::Noop,
-                    operand: 0,
-                }
-            }
-        })
-        .collect()
-}
-
-fn exec(instructions: Vec<Instruction>) -> Vec<i32> {
+fn parse_file(filename: &str) -> Vec<i32> {
     let mut timeline = Vec::<i32>::new();
     let mut x = 1;
-    for instruction in instructions {
-        match instruction.operator {
-            Operator::Addx => {
-                timeline.push(x);
-                timeline.push(x);
-                x += instruction.operand;
-            }
-            Operator::Noop => timeline.push(x),
+    for line in read_to_string(filename).unwrap().lines() {
+        if line.starts_with("addx") {
+            timeline.push(x);
+            timeline.push(x);
+            x += line.get(5..).unwrap().parse::<i32>().unwrap();
+        } else {
+            timeline.push(x);
         }
     }
     timeline
 }
 
 pub fn signal_strength(filename: &str) -> i32 {
-    let timeline = exec(parse_file(filename));
+    let timeline = parse_file(filename);
     (0..6)
         .map(|base: usize| {
             let cycle = 20 + base * 40;
-            timeline[cycle - 1] * cycle as i32
+            timeline[cycle - 1] * i32::try_from(cycle).unwrap()
         })
         .sum()
 }
 
 pub fn crt(filename: &str) -> String {
-    let timeline = exec(parse_file(filename));
     let mut screen = String::new();
     screen.push('\n');
-    for (i, x) in timeline.iter().enumerate() {
-        if (i as i32 % 40 - *x).abs() <= 1 {
+    for (i, x) in parse_file(filename).iter().enumerate() {
+        if (i32::try_from(i).unwrap() % 40 - *x).abs() <= 1 {
             screen.push('#');
         } else {
             screen.push('.');
