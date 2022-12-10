@@ -32,10 +32,10 @@ fn parse_file(filename: &str) -> Vec<Instruction> {
         .collect()
 }
 
-pub fn signal_strength(filename: &str) -> i32 {
+fn exec(instructions: Vec<Instruction>) -> Vec<i32> {
     let mut timeline = Vec::<i32>::new();
     let mut x = 1;
-    for instruction in parse_file(filename) {
+    for instruction in instructions {
         match instruction.operator {
             Operator::Addx => {
                 timeline.push(x);
@@ -45,29 +45,23 @@ pub fn signal_strength(filename: &str) -> i32 {
             Operator::Noop => timeline.push(x),
         }
     }
+    timeline
+}
+
+pub fn signal_strength(filename: &str) -> i32 {
+    let timeline = exec(parse_file(filename));
     (0..6)
         .map(|base: usize| {
             let cycle = 20 + base * 40;
-            let cx = timeline[cycle - 1];
-            cx * cycle as i32
+            timeline[cycle - 1] * cycle as i32
         })
         .sum()
 }
 
 pub fn crt(filename: &str) -> String {
-    let mut timeline = Vec::<i32>::new();
-    let mut x = 1;
-    for instruction in parse_file(filename) {
-        match instruction.operator {
-            Operator::Addx => {
-                timeline.push(x);
-                timeline.push(x);
-                x += instruction.operand;
-            }
-            Operator::Noop => timeline.push(x),
-        }
-    }
+    let timeline = exec(parse_file(filename));
     let mut screen = String::new();
+    screen.push('\n');
     for (i, x) in timeline.iter().enumerate() {
         if (i as i32 % 40 - *x).abs() <= 1 {
             screen.push('#');
@@ -93,7 +87,8 @@ mod tests {
     #[test]
     fn part2() {
         assert_eq!(
-            "##..##..##..##..##..##..##..##..##..##..\n\
+            "\n\
+             ##..##..##..##..##..##..##..##..##..##..\n\
              ###...###...###...###...###...###...###.\n\
              ####....####....####....####....####....\n\
              #####.....#####.....#####.....#####.....\n\
@@ -102,7 +97,8 @@ mod tests {
             crt("../testinput/day10.txt")
         );
         assert_eq!(
-            "###..###....##.#....####.#..#.#....###..\n\
+            "\n\
+             ###..###....##.#....####.#..#.#....###..\n\
              #..#.#..#....#.#....#....#..#.#....#..#.\n\
              ###..#..#....#.#....###..#..#.#....#..#.\n\
              #..#.###.....#.#....#....#..#.#....###..\n\
