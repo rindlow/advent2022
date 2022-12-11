@@ -1,3 +1,4 @@
+use itertools::Itertools;
 use std::{convert::TryFrom, fs::read_to_string};
 
 fn parse_file(filename: &str) -> Vec<i32> {
@@ -26,19 +27,20 @@ pub fn signal_strength(filename: &str) -> i32 {
 }
 
 pub fn crt(filename: &str) -> String {
-    let mut screen = String::new();
-    screen.push('\n');
-    for (i, x) in parse_file(filename).iter().enumerate() {
-        if (i32::try_from(i).unwrap() % 40 - *x).abs() <= 1 {
-            screen.push('#');
-        } else {
-            screen.push('.');
-        }
-        if i % 40 == 39 {
-            screen.push('\n');
-        }
-    }
-    screen
+    parse_file(filename)
+        .iter()
+        .enumerate()
+        .map(|(i, x)| {
+            if (i32::try_from(i).unwrap() % 40 - *x).abs() <= 1 {
+                '#'
+            } else {
+                '.'
+            }
+        })
+        .collect_vec()
+        .chunks(40)
+        .map(|chunk| chunk.iter().collect::<String>())
+        .join("\n")
 }
 
 #[cfg(test)]
@@ -53,23 +55,21 @@ mod tests {
     #[test]
     fn part2() {
         assert_eq!(
-            "\n\
-             ##..##..##..##..##..##..##..##..##..##..\n\
+            "##..##..##..##..##..##..##..##..##..##..\n\
              ###...###...###...###...###...###...###.\n\
              ####....####....####....####....####....\n\
              #####.....#####.....#####.....#####.....\n\
              ######......######......######......####\n\
-             #######.......#######.......#######.....\n",
+             #######.......#######.......#######.....",
             crt("../testinput/day10.txt")
         );
         assert_eq!(
-            "\n\
-             ###..###....##.#....####.#..#.#....###..\n\
+            "###..###....##.#....####.#..#.#....###..\n\
              #..#.#..#....#.#....#....#..#.#....#..#.\n\
              ###..#..#....#.#....###..#..#.#....#..#.\n\
              #..#.###.....#.#....#....#..#.#....###..\n\
              #..#.#.#..#..#.#....#....#..#.#....#....\n\
-             ###..#..#..##..####.#.....##..####.#....\n",
+             ###..#..#..##..####.#.....##..####.#....",
             crt("../input/day10.txt")
         );
     }
