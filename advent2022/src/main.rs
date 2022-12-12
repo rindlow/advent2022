@@ -78,6 +78,11 @@ fn main() {
             part1: lazy!(aoc2022::day10::signal_strength("input/day10.txt").to_string()),
             part2: lazy!(aoc2022::day10::crt("input/day10.txt")),
         },
+        Day {
+            no: 11,
+            part1: lazy!(aoc2022::day11::monkey_business("input/day11.txt", true).to_string()),
+            part2: lazy!(aoc2022::day11::monkey_business("input/day11.txt", false).to_string()),
+        },
     ];
 
     let args: Vec<String> = env::args().collect();
