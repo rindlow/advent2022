@@ -10,11 +10,11 @@ brunch = "0.3.6"
 itertools = "0.10.5"
 
 [[bench]]
-name = "bench8"
+name = "bench08"
 harness = false
 
 [[bench]]
-name = "bench9"
+name = "bench09"
 harness = false
 
 [[bench]]
