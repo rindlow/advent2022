@@ -16,9 +16,10 @@ impl Ord for Item {
                     .map(|(a, b)| a.cmp(b))
                     .find(|o| *o != Ordering::Equal)
                 {
-                    return order;
+                    order
+                } else {
+                    own_list.len().cmp(&other_list.len())
                 }
-                own_list.len().cmp(&other_list.len())
             }
             (Item::Int(own_int), Item::List(other_list)) => {
                 let list = Item::List(vec![Item::Int(*own_int)]);
@@ -72,18 +73,23 @@ fn parse_item(line: &str) -> Item {
                 stack.push(StackItem::ListItem(Item::Int(i)));
                 current_int = None;
             }
-            let mut list = Vec::<Item>::new();
-            loop {
-                match stack.pop().unwrap() {
-                    StackItem::ListStart => {
-                        stack.push(StackItem::ListItem(Item::List(list)));
-                        break;
+
+            let last_liststart = stack
+                .iter()
+                .rposition(|si| matches!(si, StackItem::ListStart))
+                .unwrap();
+            let list = stack
+                .drain(last_liststart..)
+                .skip(1) // skip ListStart
+                .map(|si| {
+                    if let StackItem::ListItem(item) = si {
+                        item
+                    } else {
+                        panic!("ListStart found in wrong place");
                     }
-                    StackItem::ListItem(item) => {
-                        list.insert(0, item);
-                    }
-                }
-            }
+                })
+                .collect_vec();
+            stack.push(StackItem::ListItem(Item::List(list)));
         }
     }
     match stack.first().unwrap() {
@@ -109,20 +115,20 @@ pub fn sum_indices(filename: &str) -> usize {
 }
 
 pub fn decoder_key(filename: &str) -> usize {
-    let div1 = parse_item("[[2]]");
-    let div2 = parse_item("[[6]]");
-    let mut items = read_to_string(filename)
+    let dividers = vec![parse_item("[[2]]"), parse_item("[[6]]")];
+    let items = read_to_string(filename)
         .unwrap()
         .lines()
         .filter(|s| !s.is_empty())
         .map(parse_item)
+        .chain(dividers.iter().map(std::borrow::ToOwned::to_owned))
+        .sorted()
         .collect_vec();
-    items.push(div1.clone());
-    items.push(div2.clone());
-    items.sort();
-    let index1 = items.iter().position(|i| *i == div1).unwrap() + 1;
-    let index2 = items.iter().position(|i| *i == div2).unwrap() + 1;
-    index1 * index2
+
+    dividers
+        .iter()
+        .map(|div| items.iter().position(|i| *i == *div).unwrap() + 1)
+        .product()
 }
 
 #[cfg(test)]
