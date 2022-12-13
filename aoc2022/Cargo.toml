@@ -28,3 +28,11 @@ harness = false
 [[bench]]
 name = "bench12"
 harness = false
+
+
+[[bench]]
+name = "bench13"
+harness = false
+
+[dev-dependencies]
+test-case = "2.2.2"
