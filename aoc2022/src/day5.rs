@@ -56,15 +56,16 @@ pub fn crates_multiple(filename: &str) -> String {
 #[cfg(test)]
 mod tests {
     use crate::day5::{crates_multiple, crates_single};
+    use test_case::test_case;
 
-    #[test]
-    fn part1() {
-        assert_eq!("CMZ", crates_single("../testinput/day5.txt"));
-        assert_eq!("VRWBSFZWM", crates_single("../input/day5.txt"));
+    #[test_case("../testinput/day5.txt", "CMZ"; "on test input")]
+    #[test_case("../input/day5.txt", "VRWBSFZWM"; "on real input")]
+    fn part1(filename: &str, expected: &str) {
+        assert_eq!(crates_single(filename), expected);
     }
-    #[test]
-    fn part2() {
-        assert_eq!("MCD", crates_multiple("../testinput/day5.txt"));
-        assert_eq!("RBTWJWMCF", crates_multiple("../input/day5.txt"));
+    #[test_case("../testinput/day5.txt", "MCD"; "on test input")]
+    #[test_case("../input/day5.txt", "RBTWJWMCF"; "on real input")]
+    fn part2(filename: &str, expected: &str) {
+        assert_eq!(crates_multiple(filename), expected);
     }
 }

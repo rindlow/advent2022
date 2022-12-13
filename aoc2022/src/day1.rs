@@ -38,18 +38,16 @@ pub fn three_most_calories_from_file(filename: &str) -> i32 {
 #[cfg(test)]
 mod tests {
     use crate::day1::{most_calories_from_file, three_most_calories_from_file};
+    use test_case::test_case;
 
-    #[test]
-    fn part1() {
-        assert_eq!(24_000, most_calories_from_file("../testinput/day1.txt"));
-        assert_eq!(69_912, most_calories_from_file("../input/day1.txt"));
+    #[test_case("../testinput/day1.txt", 24000; "on test input")]
+    #[test_case("../input/day1.txt", 69912; "on real input")]
+    fn part1(filename: &str, expected: i32) {
+        assert_eq!(most_calories_from_file(filename), expected);
     }
-    #[test]
-    fn part2() {
-        assert_eq!(
-            45_000,
-            three_most_calories_from_file("../testinput/day1.txt")
-        );
-        assert_eq!(208_180, three_most_calories_from_file("../input/day1.txt"));
+    #[test_case("../testinput/day1.txt", 45000; "on test input")]
+    #[test_case("../input/day1.txt", 208_180; "on real input")]
+    fn part2(filename: &str, expected: i32) {
+        assert_eq!(three_most_calories_from_file(filename), expected);
     }
 }

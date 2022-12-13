@@ -24,15 +24,16 @@ pub fn start_of_message(filename: &str) -> usize {
 #[cfg(test)]
 mod tests {
     use crate::day6::{start_of_message, start_of_package};
+    use test_case::test_case;
 
-    #[test]
-    fn part1() {
-        assert_eq!(7, start_of_package("../testinput/day6.txt"));
-        assert_eq!(1804, start_of_package("../input/day6.txt"));
+    #[test_case("../testinput/day6.txt", 7; "on test input")]
+    #[test_case("../input/day6.txt", 1804; "on real input")]
+    fn part1(filename: &str, expected: usize) {
+        assert_eq!(start_of_package(filename), expected);
     }
-    #[test]
-    fn part2() {
-        assert_eq!(19, start_of_message("../testinput/day6.txt"));
-        assert_eq!(2508, start_of_message("../input/day6.txt"));
+    #[test_case("../testinput/day6.txt", 19; "on test input")]
+    #[test_case("../input/day6.txt", 2508; "on real input")]
+    fn part2(filename: &str, expected: usize) {
+        assert_eq!(start_of_message(filename), expected);
     }
 }

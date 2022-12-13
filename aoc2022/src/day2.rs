@@ -29,15 +29,16 @@ pub fn score_end(filename: &str) -> u64 {
 #[cfg(test)]
 mod tests {
     use crate::day2::{score_end, score_selected};
+    use test_case::test_case;
 
-    #[test]
-    fn part1() {
-        assert_eq!(15, score_selected("../testinput/day2.txt"));
-        assert_eq!(12586, score_selected("../input/day2.txt"));
+    #[test_case("../testinput/day2.txt", 15; "on test input")]
+    #[test_case("../input/day2.txt", 12586; "on real input")]
+    fn part1(filename: &str, expected: u64) {
+        assert_eq!(score_selected(filename), expected);
     }
-    #[test]
-    fn part2() {
-        assert_eq!(12, score_end("../testinput/day2.txt"));
-        assert_eq!(13193, score_end("../input/day2.txt"));
+    #[test_case("../testinput/day2.txt", 12; "on test input")]
+    #[test_case("../input/day2.txt", 13193; "on real input")]
+    fn part2(filename: &str, expected: u64) {
+        assert_eq!(score_end(filename), expected);
     }
 }

@@ -107,19 +107,17 @@ pub fn monkey_business(filename: &str, is_part1: bool) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::monkey_business;
+    use test_case::test_case;
 
-    #[test]
-    fn part1() {
-        assert_eq!(10605, monkey_business("../testinput/day11.txt", true));
-        assert_eq!(50616, monkey_business("../input/day11.txt", true));
+    #[test_case("../testinput/day11.txt", 10605; "on test input")]
+    #[test_case("../input/day11.txt", 50616; "on real input")]
+    fn part1(filename: &str, expected: u64) {
+        assert_eq!(monkey_business(filename, true), expected);
     }
 
-    #[test]
-    fn part2() {
-        assert_eq!(
-            2_713_310_158,
-            monkey_business("../testinput/day11.txt", false)
-        );
-        assert_eq!(11_309_046_332, monkey_business("../input/day11.txt", false));
+    #[test_case("../testinput/day11.txt", 2_713_310_158; "on test input")]
+    #[test_case("../input/day11.txt", 11_309_046_332; "on real input")]
+    fn part2(filename: &str, expected: u64) {
+        assert_eq!(monkey_business(filename, false), expected);
     }
 }

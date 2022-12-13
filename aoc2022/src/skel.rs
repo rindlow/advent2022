@@ -7,9 +7,11 @@ pub fn impl1() -> i32 {
 #[cfg(test)]
 mod tests {
     use super::impl1;
+    use test_case::test_case;
 
-    #[test]
-    fn part1() {
-        assert_eq!(1, impl1());
+    #[test_case("../testinput/dayX.txt", 0; "on test input")]
+    // #[test_case("../input/dayX.txt", 0; "on real input")]
+    fn part1(filename: &str, expected: u64) {
+        assert_eq!(impl1(filename), expected);
     }
 }

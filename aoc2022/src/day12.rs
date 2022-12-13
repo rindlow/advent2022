@@ -142,15 +142,16 @@ pub fn shortest_path_from_any_a(filename: &str) -> usize {
 #[cfg(test)]
 mod tests {
     use super::{shortest_path, shortest_path_from_any_a};
+    use test_case::test_case;
 
-    #[test]
-    fn part1() {
-        assert_eq!(31, shortest_path("../testinput/day12.txt"));
-        assert_eq!(534, shortest_path("../input/day12.txt"));
+    #[test_case("../testinput/day12.txt", 31; "on test input")]
+    #[test_case("../input/day12.txt", 534; "on real input")]
+    fn part1(filename: &str, expected: usize) {
+        assert_eq!(shortest_path(filename), expected);
     }
-    #[test]
-    fn part2() {
-        assert_eq!(29, shortest_path_from_any_a("../testinput/day12.txt"));
-        assert_eq!(525, shortest_path_from_any_a("../input/day12.txt"));
+    #[test_case("../testinput/day12.txt", 29; "on test input")]
+    #[test_case("../input/day12.txt", 525; "on real input")]
+    fn part2(filename: &str, expected: usize) {
+        assert_eq!(shortest_path_from_any_a(filename), expected);
     }
 }

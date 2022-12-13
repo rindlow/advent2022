@@ -106,16 +106,17 @@ pub fn visited_nodes(filename: &str, n: usize) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::visited_nodes;
+    use test_case::test_case;
 
-    #[test]
-    fn part1() {
-        assert_eq!(13, visited_nodes("../testinput/day9.txt", 2));
-        assert_eq!(6498, visited_nodes("../input/day9.txt", 2));
+    #[test_case("../testinput/day9.txt", 13; "on test input")]
+    #[test_case("../input/day9.txt", 6498; "on real input")]
+    fn part1(filename: &str, expected: u64) {
+        assert_eq!(visited_nodes(filename, 2), expected);
     }
-    #[test]
-    fn part2() {
-        assert_eq!(1, visited_nodes("../testinput/day9.txt", 10));
-        assert_eq!(36, visited_nodes("../testinput/day9b.txt", 10));
-        assert_eq!(2531, visited_nodes("../input/day9.txt", 10));
+    #[test_case("../testinput/day9.txt", 1; "on test input")]
+    #[test_case("../testinput/day9b.txt", 36; "on test input B")]
+    #[test_case("../input/day9.txt", 2531; "on real input")]
+    fn part2(filename: &str, expected: u64) {
+        assert_eq!(visited_nodes(filename, 10), expected);
     }
 }

@@ -47,15 +47,16 @@ pub fn badges(filename: &str) -> u32 {
 #[cfg(test)]
 mod tests {
     use crate::day3::{badges, rucksack};
+    use test_case::test_case;
 
-    #[test]
-    fn part1() {
-        assert_eq!(157, rucksack("../testinput/day3.txt"));
-        assert_eq!(7826, rucksack("../input/day3.txt"));
+    #[test_case("../testinput/day3.txt", 157; "on test input")]
+    #[test_case("../input/day3.txt", 7826; "on real input")]
+    fn part1(filename: &str, expected: u32) {
+        assert_eq!(rucksack(filename), expected);
     }
-    #[test]
-    fn part2() {
-        assert_eq!(70, badges("../testinput/day3.txt"));
-        assert_eq!(2577, badges("../input/day3.txt"));
+    #[test_case("../testinput/day3.txt", 70; "on test input")]
+    #[test_case("../input/day3.txt", 2577; "on real input")]
+    fn part2(filename: &str, expected: u32) {
+        assert_eq!(badges(filename), expected);
     }
 }

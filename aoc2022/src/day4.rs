@@ -44,15 +44,16 @@ pub fn overlap(filename: &str) -> u64 {
 #[cfg(test)]
 mod tests {
     use crate::day4::{fully_contain, overlap};
+    use test_case::test_case;
 
-    #[test]
-    pub fn part1() {
-        assert_eq!(2, fully_contain("../testinput/day4.txt"));
-        assert_eq!(538, fully_contain("../input/day4.txt"));
+    #[test_case("../testinput/day4.txt", 2; "on test input")]
+    #[test_case("../input/day4.txt", 538; "on real input")]
+    fn part1(filename: &str, expected: u64) {
+        assert_eq!(fully_contain(filename), expected);
     }
-    #[test]
-    pub fn part2() {
-        assert_eq!(4, overlap("../testinput/day4.txt"));
-        assert_eq!(792, overlap("../input/day4.txt"));
+    #[test_case("../testinput/day4.txt", 4; "on test input")]
+    #[test_case("../input/day4.txt", 792; "on real input")]
+    fn part2(filename: &str, expected: u64) {
+        assert_eq!(overlap(filename), expected);
     }
 }

@@ -117,15 +117,16 @@ pub fn highest_score(filename: &str) -> u64 {
 #[cfg(test)]
 mod tests {
     use crate::day8::{highest_score, visible};
+    use test_case::test_case;
 
-    #[test]
-    fn part1() {
-        assert_eq!(21, visible("../testinput/day8.txt"));
-        assert_eq!(1798, visible("../input/day8.txt"));
+    #[test_case("../testinput/day8.txt", 21; "on test input")]
+    #[test_case("../input/day8.txt", 1798; "on real input")]
+    fn part1(filename: &str, expected: u64) {
+        assert_eq!(visible(filename), expected);
     }
-    #[test]
-    fn part2() {
-        assert_eq!(8, highest_score("../testinput/day8.txt"));
-        assert_eq!(259_308, highest_score("../input/day8.txt"));
+    #[test_case("../testinput/day8.txt", 8; "on test input")]
+    #[test_case("../input/day8.txt", 259_308; "on real input")]
+    fn part2(filename: &str, expected: u64) {
+        assert_eq!(highest_score(filename), expected);
     }
 }

@@ -133,21 +133,16 @@ pub fn decoder_key(filename: &str) -> usize {
 #[cfg(test)]
 mod tests {
     use super::{decoder_key, sum_indices};
+    use test_case::test_case;
 
-    #[test]
-    fn part1test() {
-        assert_eq!(13, sum_indices("../testinput/day13.txt"));
+    #[test_case("../testinput/day13.txt", 13; "on test input")]
+    #[test_case("../input/day13.txt", 5252; "on real input")]
+    fn part1(filename: &str, expected: usize) {
+        assert_eq!(sum_indices(filename), expected);
     }
-    #[test]
-    fn part1() {
-        assert_eq!(5252, sum_indices("../input/day13.txt"));
-    }
-    #[test]
-    fn part2test() {
-        assert_eq!(140, decoder_key("../testinput/day13.txt"));
-    }
-    #[test]
-    fn part2() {
-        assert_eq!(20592, decoder_key("../input/day13.txt"));
+    #[test_case("../testinput/day13.txt", 140; "on test input")]
+    #[test_case("../input/day13.txt", 20592; "on real input")]
+    fn part2(filename: &str, expected: usize) {
+        assert_eq!(decoder_key(filename), expected);
     }
 }

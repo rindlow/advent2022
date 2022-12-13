@@ -44,14 +44,16 @@ pub fn dir_to_delete(filename: &str) -> i32 {
 #[cfg(test)]
 mod tests {
     use crate::day7::{dir_to_delete, sum_dirs_below};
-    #[test]
-    fn part1() {
-        assert_eq!(95_437, sum_dirs_below("../testinput/day7.txt",));
-        assert_eq!(1_792_222, sum_dirs_below("../input/day7.txt"));
+    use test_case::test_case;
+
+    #[test_case("../testinput/day7.txt", 95_437; "on test input")]
+    #[test_case("../input/day7.txt", 1_792_222; "on real input")]
+    fn part1(filename: &str, expected: i32) {
+        assert_eq!(sum_dirs_below(filename), expected);
     }
-    #[test]
-    fn part2() {
-        assert_eq!(24_933_642, dir_to_delete("../testinput/day7.txt"));
-        assert_eq!(1_112_963, dir_to_delete("../input/day7.txt"));
+    #[test_case("../testinput/day7.txt", 24_933_642; "on test input")]
+    #[test_case("../input/day7.txt", 1_112_963; "on real input")]
+    fn part2(filename: &str, expected: i32) {
+        assert_eq!(dir_to_delete(filename), expected);
     }
 }
