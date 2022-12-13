@@ -1,6 +1,5 @@
-use std::{cmp::Ordering, fs::read_to_string, iter::zip};
-
 use itertools::Itertools;
+use std::{borrow::ToOwned, cmp::Ordering, fs::read_to_string, iter::zip};
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum Item {
@@ -121,7 +120,7 @@ pub fn decoder_key(filename: &str) -> usize {
         .lines()
         .filter(|s| !s.is_empty())
         .map(parse_item)
-        .chain(dividers.iter().map(std::borrow::ToOwned::to_owned))
+        .chain(dividers.iter().map(ToOwned::to_owned))
         .sorted()
         .collect_vec();
 
