@@ -98,9 +98,10 @@ pub fn sand_before_abyss(filename: &str) -> i32 {
 
 pub fn sand_to_rest(filename: &str) -> i32 {
     let mut map = parse_file(filename);
+    let floor = map.keys().map(|p| p.y).max().unwrap() + 2;
     let mut i = 0;
     loop {
-        if let Some(pos) = sand_pos(&map, Some(map.keys().map(|p| p.y).max().unwrap() + 2)) {
+        if let Some(pos) = sand_pos(&map, Some(floor)) {
             if pos.x == 500 && pos.y == 0 {
                 return i + 1;
             }
