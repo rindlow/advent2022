@@ -6,6 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+fxhash = "0.2.1"
 itertools = "0.10.5"
 
 [dev-dependencies]
@@ -38,4 +39,8 @@ harness = false
 
 [[bench]]
 name = "bench14"
+harness = false
+
+[[bench]]
+name = "bench15"
 harness = false

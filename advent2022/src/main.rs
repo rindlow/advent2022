@@ -98,6 +98,13 @@ fn main() {
             part1: lazy!(aoc2022::day14::sand_before_abyss("input/day14.txt").to_string()),
             part2: lazy!(aoc2022::day14::sand_to_rest("input/day14.txt").to_string()),
         },
+        Day {
+            no: 15,
+            part1: lazy!(aoc2022::day15::cannot_contain("input/day15.txt", 2_000_000).to_string()),
+            part2: lazy!(
+                aoc2022::day15::tuning_frequency("input/day15.txt", 4_000_000).to_string()
+            ),
+        },
     ];
 
     let args: Vec<String> = env::args().collect();
