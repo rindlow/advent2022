@@ -1,17 +1,12 @@
 use fxhash::FxHashSet as HashSet;
 use itertools::Itertools;
-use std::{
-    cmp::{max, min},
-    fs::read_to_string,
-};
+use std::fs::read_to_string;
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 struct Pos {
     x: i64,
     y: i64,
 }
 
-#[derive(Debug)]
 struct Report {
     sensor: Pos,
     beacon: Pos,
@@ -76,7 +71,7 @@ fn merge_ranges(ranges: &[Range]) -> Vec<Range> {
     for range in ranges.iter().sorted() {
         if let Some(last) = merged.last_mut() {
             if overlap_or_adjacent(range, last) {
-                if range.last > last.last {
+                if last.last < range.last {
                     last.last = range.last;
                 }
             } else {
@@ -114,46 +109,38 @@ pub fn cannot_contain(filename: &str, row_no: i64) -> i64 {
         }
     }
 
-    let mut x = 0;
+    let mut not_present = 0;
     for range in merge_ranges(&ranges) {
-        x += range.last - range.first + 1;
+        not_present += range.last - range.first + 1;
         for o in &occupied {
             if *o >= range.first && *o <= range.last {
-                x -= 1;
+                not_present -= 1;
             }
         }
     }
-    x
+    not_present
 }
 
 pub fn tuning_frequency(filename: &str, area: i64) -> i64 {
     let reports = parse_file(filename);
-    let mut rows = Vec::<Range>::new();
-    for report in &reports {
-        rows.push(Range {
-            first: max(0, report.sensor.y - report.range),
-            last: min(area, report.sensor.y + report.range),
-        });
-    }
-    for row_range in merge_ranges(&rows) {
-        for row_no in row_range.first..=row_range.last {
-            let mut ranges = Vec::<Range>::new();
-            for report in &reports {
-                if row_in_range(row_no, report) {
-                    let dx = report.range - (report.sensor.y - row_no).abs();
-                    ranges.push(Range {
-                        first: report.sensor.x - dx,
-                        last: report.sensor.x + dx,
-                    });
-                }
+    for row_no in 0..=area {
+        let mut ranges = Vec::<Range>::new();
+        for report in &reports {
+            if row_in_range(row_no, report) {
+                let dx = report.range - (report.sensor.y - row_no).abs();
+                ranges.push(Range {
+                    first: report.sensor.x - dx,
+                    last: report.sensor.x + dx,
+                });
             }
-            for range in merge_ranges(&ranges) {
-                if range.first > 0 && range.first <= area {
-                    return 4_000_000 * (range.first - 1) + row_no;
-                }
-                if range.last >= 0 && range.last < area {
-                    return 4_000_000 * (range.last + 1) + row_no;
-                }
+        }
+
+        for range in merge_ranges(&ranges) {
+            if range.first > 0 && range.first <= area {
+                return 4_000_000 * (range.first - 1) + row_no;
+            }
+            if range.last >= 0 && range.last < area {
+                return 4_000_000 * (range.last + 1) + row_no;
             }
         }
     }
