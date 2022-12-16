@@ -77,12 +77,12 @@ fn path(valves: &Map) -> u32 {
     let mut max_pressure: u32 = 0;
 
     while !queue.is_empty() {
-        println!("queue.len() = {}", queue.len());
+        // println!("queue.len() = {}", queue.len());
         let item = queue.pop_front().unwrap();
-        println!(
-            "minute {}: looking at QueueItem {} pressure: {}, increase: {}, {:?}",
-            item.minutes, item.valve, item.pressure, item.increase, item.came_from
-        );
+        // println!(
+        //     "minute {}: looking at QueueItem {} pressure: {}, increase: {}, {:?}",
+        //     item.minutes, item.valve, item.pressure, item.increase, item.came_from
+        // );
 
         if item.pressure > max_pressure {
             max_pressure = item.pressure;
@@ -94,11 +94,11 @@ fn path(valves: &Map) -> u32 {
             path.push(item.valve.clone());
 
             for dest in &valve.tunnels {
-                if let Some(last) = item.came_from.iter().last() {
-                    println!("dest = {}, came_from.last = {}", dest, last);
-                } else {
-                    println!("no last");
-                }
+                // if let Some(last) = item.came_from.iter().last() {
+                //     println!("dest = {}, came_from.last = {}", dest, last);
+                // } else {
+                //     println!("no last");
+                // }
                 if item.came_from.is_empty() || *dest != *item.came_from.iter().last().unwrap() {
                     queue.push_back(QueueItem {
                         valve: dest.to_string(),
@@ -111,7 +111,7 @@ fn path(valves: &Map) -> u32 {
                 }
             }
             if item.minutes < 29 && !valve.open && valve.flow > 0 {
-                println!("opening valve {}", item.valve);
+                // println!("opening valve {}", item.valve);
                 path.push(format!("open({})", item.valve));
                 let mut mutvalves = item.valves.clone();
                 mutvalves
