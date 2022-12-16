@@ -105,6 +105,11 @@ fn main() {
                 aoc2022::day15::tuning_frequency("input/day15.txt", 4_000_000).to_string()
             ),
         },
+        Day {
+            no: 16,
+            part1: lazy!(aoc2022::day16::impl1("testinput/day16.txt").to_string()),
+            part2: lazy!(String::new()),
+        },
     ];
 
     let args: Vec<String> = env::args().collect();
