@@ -1,4 +1,5 @@
 #![warn(clippy::pedantic)]
+#![allow(clippy::too_many_lines)]
 
 use lazy_st::{lazy, Lazy};
 use std::env;
@@ -107,8 +108,18 @@ fn main() {
         },
         Day {
             no: 16,
-            part1: lazy!(aoc2022::day16::impl1("testinput/day16.txt").to_string()),
+            part1: lazy!(aoc2022::day16::impl1("input/day16.txt").to_string()),
             part2: lazy!(String::new()),
+        },
+        Day {
+            no: 16,
+            part1: lazy!(String::new()),
+            part2: lazy!(String::new()),
+        },
+        Day {
+            no: 18,
+            part1: lazy!(aoc2022::day18::surface_area("input/day18.txt").to_string()),
+            part2: lazy!(aoc2022::day18::external_surface_area("input/day18.txt").to_string()),
         },
     ];
 
