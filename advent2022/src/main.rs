@@ -136,6 +136,26 @@ fn main() {
             part1: lazy!(aoc2022::day21::monkey_yell("input/day21.txt").to_string()),
             part2: lazy!(aoc2022::day21::equality_test("input/day21.txt").to_string()),
         },
+        Day {
+            no: 22,
+            part1: lazy!(String::new()),
+            part2: lazy!(String::new()),
+        },
+        Day {
+            no: 23,
+            part1: lazy!(String::new()),
+            part2: lazy!(String::new()),
+        },
+        Day {
+            no: 24,
+            part1: lazy!(String::new()),
+            part2: lazy!(String::new()),
+        },
+        Day {
+            no: 25,
+            part1: lazy!(aoc2022::day25::sum_snafu("input/day25.txt")),
+            part2: lazy!(String::new()),
+        },
     ];
 
     let args: Vec<String> = env::args().collect();
