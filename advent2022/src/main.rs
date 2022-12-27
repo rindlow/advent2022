@@ -121,6 +121,21 @@ fn main() {
             part1: lazy!(aoc2022::day18::surface_area("input/day18.txt").to_string()),
             part2: lazy!(aoc2022::day18::external_surface_area("input/day18.txt").to_string()),
         },
+        Day {
+            no: 19,
+            part1: lazy!(String::new()),
+            part2: lazy!(String::new()),
+        },
+        Day {
+            no: 20,
+            part1: lazy!(String::new()),
+            part2: lazy!(String::new()),
+        },
+        Day {
+            no: 21,
+            part1: lazy!(aoc2022::day21::monkey_yell("input/day21.txt").to_string()),
+            part2: lazy!(aoc2022::day21::equality_test("input/day21.txt").to_string()),
+        },
     ];
 
     let args: Vec<String> = env::args().collect();
