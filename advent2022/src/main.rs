@@ -138,8 +138,8 @@ fn main() {
         },
         Day {
             no: 22,
-            part1: lazy!(String::new()),
-            part2: lazy!(String::new()),
+            part1: lazy!(aoc2022::day22::final_password("input/day22.txt", 0).to_string()),
+            part2: lazy!(aoc2022::day22::final_password("input/day22.txt", 2).to_string()),
         },
         Day {
             no: 23,
