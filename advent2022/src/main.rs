@@ -109,7 +109,8 @@ fn main() {
         Day {
             no: 16,
             part1: lazy!(aoc2022::day16::max_pressure("input/day16.txt").to_string()),
-            part2: lazy!(aoc2022::day16::max_pressure_with_elephant("input/day16.txt").to_string()),
+            // part2: lazy!(aoc2022::day16::max_pressure_with_elephant("input/day16.txt").to_string()),
+            part2: lazy!(String::new()),
         },
         Day {
             no: 17,
@@ -148,8 +149,8 @@ fn main() {
         },
         Day {
             no: 24,
-            part1: lazy!(String::new()),
-            part2: lazy!(String::new()),
+            part1: lazy!(aoc2022::day24::minutes("input/day24.txt", 1).to_string()),
+            part2: lazy!(aoc2022::day24::minutes("input/day24.txt", 3).to_string()),
         },
         Day {
             no: 25,
