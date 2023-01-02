@@ -143,8 +143,8 @@ fn main() {
         },
         Day {
             no: 23,
-            part1: lazy!(String::new()),
-            part2: lazy!(String::new()),
+            part1: lazy!(aoc2022::day23::empty_tiles("input/day23.txt").to_string()),
+            part2: lazy!(aoc2022::day23::no_move_round("input/day23.txt").to_string()),
         },
         Day {
             no: 24,
